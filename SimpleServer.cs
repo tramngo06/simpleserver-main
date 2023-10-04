@@ -247,23 +247,23 @@ class SimpleHTTPServer
     /// </summary>
     /// <param name="path">Directory path to serve.</param>
     /// <param name="port">Port of the server.</param>
-    public SimpleHTTPServer(string path, int port)
+    public SimpleHTTPServer(string path, int port, string configFilename)
     {
-        this.Initialize(path, port);
+        this.Initialize(path, port, configFilename);
     }
 
     /// <summary>
     /// Construct server with any open port.
     /// </summary>
     /// <param name="path">Directory path to serve.</param>
-    public SimpleHTTPServer(string path)
+    public SimpleHTTPServer(string path, string configFilename)
     {
         //get an empty port
         TcpListener l = new TcpListener(IPAddress.Loopback, 0);
         l.Start();
         int port = ((IPEndPoint)l.LocalEndpoint).Port;
         l.Stop();
-        this.Initialize(path, port);
+        this.Initialize(path, port, configFilename);
     }
 
     /// <summary>
@@ -292,7 +292,7 @@ class SimpleHTTPServer
             }
             catch (Exception ex)
             {
-                Console.WriteLine(ex.Message);
+                Console.WriteLine(ex);
             }
         }
         Console.WriteLine("Server stopped!");
@@ -385,13 +385,23 @@ class SimpleHTTPServer
     /// </summary>
     /// <param name="path">the path of the root directory to serve files</param>
     /// <param name="port">the port to listen for connections</param>
-    private void Initialize(string path, int port)
+    /// <param name="configFilename"> the name of the JSON configuration file</param>
+    private void Initialize(string path, int port, string configFilename)
     {
         this._rootDirectory = path;
         this._port = port;
+
+        var options = new JsonSerializerOptions
+        {
+            PropertyNameCaseInsensitive = true
+        };
+
+        string text = File.ReadAllText("config.json");
+        var config = JsonSerializer.Deserialize<Config>(text, options);
         _serverThread = new Thread(this.Listen);
         _serverThread.Start();
+
+
+
     }
-
-
 }

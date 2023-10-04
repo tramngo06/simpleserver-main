@@ -7,8 +7,25 @@ static void TestJSON()
         PropertyNameCaseInsensitive = true
     };
 
+    string text = File.ReadAllText("config.json");
+    var config = JsonSerializer.Deserialize<Config>(text, options);
+
+    Console.WriteLine($"MimeMappings: {config.MimeTypes[".html"]}");
+    Console.WriteLine($"INdexFiles: {config.IndexFiles[0]}");
+
+
+}
+
+static void TestJSON2()
+{
+    var options = new JsonSerializerOptions
+    {
+        PropertyNameCaseInsensitive = true
+    };
+
     string text = File.ReadAllText(@"json/books.json");
     var books = JsonSerializer.Deserialize<List<Book>>(text, options);
+
 
     Book book = books[4];
     Console.WriteLine($"title: {book.Title}");
@@ -44,7 +61,7 @@ path - display the number of times each path was requested
         }
         else if (command.Equals("numreqs"))
         {
-            Console.WriteLine( $"Number of Requests: {server.NumRequests}");
+            Console.WriteLine($"Number of Requests: {server.NumRequests}");
 
         }
         else if (command.Equals("paths"))// show how many time we requested the website by enter "path"
@@ -61,5 +78,5 @@ path - display the number of times each path was requested
     }
 }
 
-//TestJSON();
-TestServer();
+TestJSON();
+//TestServer();
