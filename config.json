@@ -1,4 +1,10 @@
 {
+    "indexFiles": [
+        "index.html",
+        "index.htm",
+        "default.html",
+        "default.htm"
+    ],
     "mimeType": {
         ".asf": "video/x-ms-asf",
         ".asx": "video/x-ms-asf",
@@ -63,6 +69,6 @@
         ".wmv": "video/x-ms-wmv",
         ".xml": "text/xml",
         ".xpi": "application/x-xpinstall",
-        ".zip": "application/zip",
+        ".zip": "application/zip"
     }
 }

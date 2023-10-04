@@ -1,5 +1,6 @@
 ﻿using System.Text.Json;
 
+
 static void TestJSON()
 {
     var options = new JsonSerializerOptions
@@ -34,7 +35,7 @@ static void TestJSON2()
 
 static void TestServer()
 {
-    SimpleHTTPServer server = new SimpleHTTPServer("files", 8080);
+    SimpleHTTPServer server = new SimpleHTTPServer("files", 8080, "config.json");
     string helpMessage = @"Server started. You can try the following commands:
 help - dislay this help message       
 stop - stop the server
@@ -78,5 +79,5 @@ path - display the number of times each path was requested
     }
 }
 
-TestJSON();
-//TestServer();
+//TestJSON();
+TestServer();
